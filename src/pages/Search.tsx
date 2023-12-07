@@ -10,7 +10,6 @@ function Search() {
   const [inputValue, setInputValue] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [infoDiv, setInfoDiv] = useState(false);
 
   const handleNameChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(target.value);
@@ -27,7 +26,6 @@ function Search() {
     setArtistData(artistObject);
     setArtistName(inputValue);
     setLoading(false);
-    setInfoDiv(true);
     setInputValue('');
   };
 
@@ -53,7 +51,7 @@ function Search() {
           </button>
         </form>
       )}
-      {infoDiv && (
+      {artistData.length ? (
         <div>
           <div>
             <h1>
@@ -64,18 +62,25 @@ function Search() {
           </div>
           <section>
             <ul>
-              {artistData.length && artistData.map((data) => {
-                <li>
+              {artistData.length && artistData.map((data, index) => (
+                <li key={ data.artistId }>
                   <Link
                     to={ `/album/${data.collectionId}` }
                     data-testid={ `link-to-album-${data.collectionId}` }
                   >
                     Albúm
+                    {' '}
+                    {index}
                   </Link>
-                </li>;
-              })}
+                  <h2>{data.collectionName}</h2>
+                </li>
+              ))}
             </ul>
           </section>
+        </div>
+      ) : (
+        <div>
+          <h1>Nenhum álbum foi encontrado</h1>
         </div>
       )}
     </div>
