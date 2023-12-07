@@ -4,8 +4,12 @@ import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import { Loading } from '../components/Loading';
 import { AlbumType } from '../types';
 
-function Search() {
-  const [artistData, setArtistData] = useState<AlbumType[]>([]);
+type SearchProps = {
+  artistData: AlbumType[];
+  setArtistData: React.Dispatch<React.SetStateAction<AlbumType[]>>;
+};
+
+function Search({ artistData, setArtistData }: SearchProps) {
   const [artistName, setArtistName] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
