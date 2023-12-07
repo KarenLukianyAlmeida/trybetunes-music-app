@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { createUser } from '../services/userAPI';
+import { Loading } from './Loading';
 
 function Login() {
   const [nameData, setName] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function handleNameChange({ target }: React.ChangeEvent<HTMLInputElement>) {
     setName(target.value);
@@ -12,26 +14,37 @@ function Login() {
     }
   }
 
+  function handleClick() {
+    setLoading(true);
+    createUser({ name: nameData });
+    setLoading(false);
+  }
+
   return (
-    <form
-      onSubmit={ (e: React.FormEvent<HTMLFormElement>) => e.preventDefault() }
-    >
-      <input
-        type="text"
-        data-testid="login-name-input"
-        placeholder="Qual é o seu nome?"
-        value={ nameData }
-        onChange={ handleNameChange }
-      />
-      <button
-        data-testid="login-submit-button"
-        type="submit"
-        disabled={ btnDisabled }
-        onClick={ createUser({ name: nameData }) }
+    <div>
+      <form
+        onSubmit={ (e: React.FormEvent<HTMLFormElement>) => e.preventDefault() }
       >
-        Entrar
-      </button>
-    </form>
+        <input
+          type="text"
+          data-testid="login-name-input"
+          placeholder="Qual é o seu nome?"
+          value={ nameData }
+          onChange={ handleNameChange }
+        />
+        <button
+          data-testid="login-submit-button"
+          type="submit"
+          disabled={ btnDisabled }
+          onClick={ handleClick }
+        >
+          Entrar
+        </button>
+      </form>
+      {loading && (
+        <Loading />
+      )}
+    </div>
   );
 }
 
