@@ -7,18 +7,18 @@ function Login() {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  function handleNameChange({ target }: React.ChangeEvent<HTMLInputElement>) {
+  const handleNameChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setName(target.value);
     if (target.value.length >= 3) {
       setBtnDisabled(false);
     }
-  }
+  };
 
-  function handleClick() {
+  const handleClick = async () => {
     setLoading(true);
     createUser({ name: nameData });
     setLoading(false);
-  }
+  };
 
   return (
     <div>
