@@ -1,24 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { getUser } from '../services/userAPI';
+import { UserType } from '../types';
+import { Loading } from './Loading';
 
 function Header() {
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState<UserType>();
 
-  const callGetUser = () => {
-
-  };
+  useEffect(() => {
+    const receiveUser = async () => {
+      setLoading(true);
+      const userInfo = await getUser();
+      setUserData(userInfo);
+      setLoading(false);
+    };
+    receiveUser();
+  }, []);
 
   return (
-    <header data-testid="header-component">
-      <nav>
-        <NavLink to="/search" data-testid="link-to-search">Procurar</NavLink>
-        <NavLink to="/favorites" data-testid="link-to-favorites">Favoritos</NavLink>
-        <NavLink to="/profile" data-testid="link-to-profile">Perfil</NavLink>
-      </nav>
-      <div>
-        <h1 data-testid="header-user-name" />
-      </div>
-    </header>
+    <div>
+      {loading ? <Loading /> : (
+        <header data-testid="header-component">
+          <nav>
+            <NavLink to="/search" data-testid="link-to-search">Procurar</NavLink>
+            <NavLink to="/favorites" data-testid="link-to-favorites">Favoritos</NavLink>
+            <NavLink to="/profile" data-testid="link-to-profile">Perfil</NavLink>
+          </nav>
+          <div>
+            <h1 data-testid="header-user-name">{userData?.name}</h1>
+          </div>
+        </header>
+      )}
+    </div>
   );
 }
 
