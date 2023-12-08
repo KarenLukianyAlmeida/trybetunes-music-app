@@ -16,30 +16,27 @@ function Album() {
     const receiveMusics = async () => {
       if (params.id) {
         const musicsList = await getMusics(params.id);
-        setMusicData(musicsList.slice(1) as SongType[]);
-        setAlbumData(musicsList[0]);
+        const [album, ...musics] = musicsList;
+        setMusicData(musics);
+        setAlbumData(album);
+        setLoading(false);
       }
     };
     receiveMusics();
-    setLoading(false);
   }, []);
 
+  if (loading) return <Loading />;
   return (
     <div>
-      {loading ? <Loading /> : (
-        <div>
-          <h1 data-testid="artist-name">{albumData?.artistName}</h1>
-          <h2 data-testid="album-name">{albumData?.collectionName}</h2>
-          {musicData?.map((music, index) => (
-            <div key={ index }>
-              <MusicCard
-                key={ index }
-                musicInfo={ music }
-              />
-            </div>
-          ))}
+      <h1 data-testid="artist-name">{albumData?.artistName}</h1>
+      <h2 data-testid="album-name">{albumData?.collectionName}</h2>
+      {musicData && musicData.map((music, index) => (
+        <div key={ index }>
+          <MusicCard
+            musicInfo={ music }
+          />
         </div>
-      )}
+      ))}
     </div>
   );
 }
