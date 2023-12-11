@@ -5,12 +5,11 @@ import { UserType } from '../types';
 import { Loading } from './Loading';
 
 function Header() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<UserType>();
 
   useEffect(() => {
     const receiveUser = async () => {
-      setLoading(true);
       const userInfo = await getUser();
       setUserData(userInfo);
       setLoading(false);
