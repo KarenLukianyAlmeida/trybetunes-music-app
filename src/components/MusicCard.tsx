@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { SongType } from '../types';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
+// import checkedHeart from '/src/images/checked_heart.png';
 
 type MusicCardProps = {
   musicInfo: SongType;
@@ -7,14 +9,17 @@ type MusicCardProps = {
 
 function MusicCard({ musicInfo }: MusicCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
+  // const [favoriteMusics, setFavoriteMusics] = useState<SongType[]>([]);
 
   const { trackName, previewUrl, trackId } = musicInfo;
 
   const handleChange = () => {
     if (isFavorite) {
       setIsFavorite(false);
+      removeSong(musicInfo);
     } else {
       setIsFavorite(true);
+      addSong(musicInfo);
     }
   };
 
@@ -31,21 +36,21 @@ function MusicCard({ musicInfo }: MusicCardProps) {
       </audio>
       <div className="check-image">
         <label
-          htmlFor="favorite"
+          htmlFor={ String(trackId) }
           data-testid={ `checkbox-music-${trackId}` }
         >
           <input
             type="checkbox"
             name="isFavorite"
-            id="favorite"
+            id={ String(trackId) }
             value="isFavorite"
             checked={ isFavorite }
             onChange={ handleChange }
           />
           {
             isFavorite
-              ? <img src="../src/images/checked_heart.png" alt="favorite" />
-              : <img src="../src/images/empty_heart.png" alt="favorite" />
+              ? <img src="/src/images/checked_heart.png" alt="favorite" />
+              : <img src="/src/images/empty_heart.png" alt="favorite" />
             }
         </label>
       </div>
