@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SongType } from '../types';
-import { addSong, removeSong } from '../services/favoriteSongsAPI';
-// import checkedHeart from '/src/images/checked_heart.png';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 type MusicCardProps = {
   musicInfo: SongType;
@@ -9,8 +8,6 @@ type MusicCardProps = {
 
 function MusicCard({ musicInfo }: MusicCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
-  // const [favoriteMusics, setFavoriteMusics] = useState<SongType[]>([]);
-
   const { trackName, previewUrl, trackId } = musicInfo;
 
   const handleChange = () => {
@@ -22,6 +19,16 @@ function MusicCard({ musicInfo }: MusicCardProps) {
       addSong(musicInfo);
     }
   };
+
+  useEffect(() => {
+    const configMusics = async () => {
+      const favoritsSongs = await getFavoriteSongs();
+      if (favoritsSongs.find((song) => song.trackId === trackId)) {
+        setIsFavorite(true);
+      }
+    };
+    configMusics();
+  }, []);
 
   return (
     <div>
