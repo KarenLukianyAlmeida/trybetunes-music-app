@@ -5,24 +5,21 @@ import { SongType } from '../types';
 
 function Favorites() {
   const [favoritsSongs, setFavoritsSongs] = useState<SongType[]>([]);
-  const [favoritsLength, setFavoritsLength] = useState(0);
 
   useEffect(() => {
     const configFavoritesSongs = async () => {
       const favorits = await getFavoriteSongs();
-      console.log(favorits);
-
-      if (favorits.length !== favoritsLength) {
-        setFavoritsSongs(favorits);
-        setFavoritsLength(favoritsSongs.length);
-      }
+      setFavoritsSongs(favorits);
     };
     configFavoritesSongs();
-  }, [favoritsSongs, favoritsLength]);
+  }, []);
 
-  // if (favoritsSongs.length !== favoritsLength) {
-
-  // }
+  const handleUnFavorite = (trackId: number) => {
+    const updateFavorits = favoritsSongs.filter((song) => (
+      song.trackId !== trackId
+    ));
+    setFavoritsSongs(updateFavorits);
+  };
 
   return (
     <div>
@@ -30,6 +27,7 @@ function Favorites() {
         <div key={ index }>
           <MusicCard
             musicInfo={ music }
+            unFavorite={ handleUnFavorite }
           />
         </div>
       ))}

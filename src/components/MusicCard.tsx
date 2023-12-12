@@ -4,9 +4,10 @@ import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongs
 
 type MusicCardProps = {
   musicInfo: SongType;
+  unFavorite?: (trackId:number) => void ;
 };
 
-function MusicCard({ musicInfo }: MusicCardProps) {
+function MusicCard({ musicInfo, unFavorite = () => {} }: MusicCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const { trackName, previewUrl, trackId } = musicInfo;
 
@@ -14,6 +15,7 @@ function MusicCard({ musicInfo }: MusicCardProps) {
     if (isFavorite) {
       setIsFavorite(false);
       removeSong(musicInfo);
+      unFavorite(trackId);
     } else {
       setIsFavorite(true);
       addSong(musicInfo);
@@ -28,7 +30,7 @@ function MusicCard({ musicInfo }: MusicCardProps) {
       }
     };
     configMusics();
-  }, []);
+  }, [trackId]);
 
   return (
     <div>
