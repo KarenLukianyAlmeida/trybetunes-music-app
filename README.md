@@ -11,11 +11,11 @@ The TrybeTunes is a web application for searching and playing songs from various
 - Favorite/unfavorite songs
 - Display the list of favorited songs
 
-## Technologies
+## 🚀 Technologies
 
 > React | TypeScript | React Router DOM | Hooks (useState, useEffect) | Vite | VS Code.
 
-## Features
+## 📂 Features
 
 The following files were implemented by me:
 
@@ -23,6 +23,19 @@ The following files were implemented by me:
 - **pages/**: Includes the main pages, such as Login, Album, Favorites, and Profile.
 - **App.tsx**: Manages the application's routing and defines the navigation between different pages.
 
+## 📸 Screenshots
+<h3>👤 Login Screen</h3>
+
+<img src="https://github.com/user-attachments/assets/d822a832-3004-4315-957b-16ba56e2311b" width="300"/>
+
+<h3>💿 Album Screen</h3>
+
+<img src="https://github.com/user-attachments/assets/5d587f18-9456-4455-a991-b7e40a4fe448" width="300"/>
+<img src="https://github.com/user-attachments/assets/f7c5a763-eb71-48b5-9266-7c0cd10ed80d" width="300"/>
+
+<h3>⭐ Favorites Screen</h3>
+
+<img src="https://github.com/user-attachments/assets/e1607caf-de33-460c-aaf6-785067af47ca" width="300"/>
 
 ## Execute the project
 
